@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarOS - The Operating System for Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-white overflow-x-hidden selection:bg-brand-100">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">ScholarOS</span>
+                </div>
+                <!-- Links and buttons removed as requested -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Blobs -->
+        <div class="blob bg-purple-300 w-96 h-96 rounded-full top-0 left-0 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="blob bg-blue-300 w-96 h-96 rounded-full bottom-0 right-0 translate-x-1/3 translate-y-1/3"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-8 animate-fade-in-up">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                v2.0 is now live for all students
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+                Your entire academic life, <br>
+                <span class="gradient-text">in one operating system.</span>
+            </h1>
+
+            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                ScholarOS unifies your assignments, research, and schedule. Stop juggling five different apps and start achieving your best grades.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="{%url 'myapp:dashboard'%}" class="px-8 py-4 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg hover:shadow-brand-500/25 flex items-center justify-center gap-2">
+                    Join Us <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <button class="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-xl font-semibold hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="play-circle" class="w-4 h-4"></i> Watch Demo
+                </button>
+            </div>
+
+            <!-- Hero Image / Mockup -->
+            <div class="relative mx-auto max-w-5xl rounded-2xl border border-slate-200 bg-slate-50/50 p-2 backdrop-blur-sm shadow-2xl">
+                <div class="rounded-xl bg-white overflow-hidden border border-slate-200">
+                    <!-- Mock Browser Header -->
+                    <div class="h-8 bg-slate-50 border-b border-slate-200 flex items-center px-4 gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        <div class="ml-4 w-64 h-4 bg-slate-200 rounded-full opacity-50"></div>
+                    </div>
+                    <!-- Mock App UI -->
+                    <div class="p-6 grid grid-cols-12 gap-6 h-[500px] overflow-hidden">
+                        <!-- Sidebar -->
+                        <div class="col-span-2 hidden md:flex flex-col gap-4 border-r border-slate-100 pr-4">
+                            <div class="h-8 w-full bg-brand-50 rounded-lg"></div>
+                            <div class="h-4 w-3/4 bg-slate-100 rounded"></div>
+                            <div class="h-4 w-full bg-slate-100 rounded"></div>
+                            <div class="h-4 w-5/6 bg-slate-100 rounded"></div>
+                            <div class="mt-auto h-12 w-full bg-slate-100 rounded-lg"></div>
+                        </div>
+                        <!-- Main Content -->
+                        <div class="col-span-12 md:col-span-7 flex flex-col gap-6">
+                            <div class="flex justify-between items-center">
+                                <div class="h-8 w-48 bg-slate-100 rounded"></div>
+                                <div class="h-8 w-24 bg-brand-600 rounded"></div>
+                            </div>
+                            <!-- Mock Charts/Cards -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="h-32 bg-orange-50 rounded-xl border border-orange-100 p-4">
+                                    <div class="w-8 h-8 bg-orange-200 rounded-full mb-2"></div>
+                                    <div class="h-4 w-24 bg-orange-200/50 rounded"></div>
+                                </div>
+                                <div class="h-32 bg-blue-50 rounded-xl border border-blue-100 p-4">
+                                    <div class="w-8 h-8 bg-blue-200 rounded-full mb-2"></div>
+                                    <div class="h-4 w-24 bg-blue-200/50 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="h-64 bg-slate-50 rounded-xl border border-slate-100 p-4 flex flex-col gap-3">
+                                <div class="h-4 w-1/3 bg-slate-200 rounded"></div>
+                                <div class="h-2 w-full bg-slate-200 rounded"></div>
+                                <div class="h-2 w-full bg-slate-200 rounded"></div>
+                                <div class="h-2 w-5/6 bg-slate-200 rounded"></div>
+                            </div>
+                        </div>
+                        <!-- Right Panel -->
+                        <div class="col-span-3 hidden md:flex flex-col gap-4 border-l border-slate-100 pl-4">
+                            <div class="h-32 bg-purple-50 rounded-xl border border-purple-100"></div>
+                            <div class="h-full bg-slate-50 rounded-xl"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm">Features</h2>
+                <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Everything you need to excel</p>
+                <p class="mt-4 text-lg text-slate-600">Built specifically for the modern student workflow.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1: Evaluation -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Application Eval</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        AI-driven feedback on your essays and applications. Get a score and actionable tips before you submit.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Summarizer -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Content Summary</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Turn 50-page PDFs into 1-page summaries. Grasp complex topics in minutes, not hours.
+                    </p>
+                </div>
+
+                <!-- Feature 3: To-Do -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="list-todo" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Smart To-Do</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Tasks that automatically prioritize themselves based on your deadlines and course difficulty.
+                    </p>
+                </div>
+
+                <!-- Feature 4: Calendar -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Student Calendar</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Integrates with your LMS. Visualizes exam blocks and study sessions automatically.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Feature Showcase -->
+    <section class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+
+                <!-- Controls -->
+                <div class="w-full lg:w-1/3 space-y-2">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8">See it in action</h2>
+
+                    <button onclick="switchTab('eval')" id="btn-eval" class="w-full text-left p-4 rounded-xl transition-all flex items-start gap-4 border border-transparent bg-slate-50 border-brand-200 shadow-sm active-tab">
+                        <div class="mt-1">
+                            <i data-lucide="file-check-2" class="w-5 h-5 text-brand-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Application Evaluation</h4>
+                            <p class="text-sm text-slate-600 mt-1">Real-time scoring and suggestions.</p>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('summary')" id="btn-summary" class="w-full text-left p-4 rounded-xl transition-all flex items-start gap-4 border border-transparent hover:bg-slate-50">
+                        <div class="mt-1">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-500">Content Summarizer</h4>
+                            <p class="text-sm text-slate-400 mt-1">Instant key takeaways.</p>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('todo')" id="btn-todo" class="w-full text-left p-4 rounded-xl transition-all flex items-start gap-4 border border-transparent hover:bg-slate-50">
+                        <div class="mt-1">
+                            <i data-lucide="list-todo" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-500">Smart To-Do List</h4>
+                            <p class="text-sm text-slate-400 mt-1">Kanban and List views.</p>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('calendar')" id="btn-calendar" class="w-full text-left p-4 rounded-xl transition-all flex items-start gap-4 border border-transparent hover:bg-slate-50">
+                        <div class="mt-1">
+                            <i data-lucide="calendar-clock" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-500">Student Calendar</h4>
+                            <p class="text-sm text-slate-400 mt-1">Time-blocking made easy.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Visuals Area -->
+                <div class="w-full lg:w-2/3">
+                    <div class="relative rounded-2xl bg-slate-900 p-2 shadow-2xl ring-1 ring-slate-900/10">
+                        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-800 to-black rounded-2xl -z-10"></div>
+                        <div class="relative rounded-xl bg-slate-800/50 backdrop-blur border border-slate-700 overflow-hidden h-[450px]">
+
+                            <!-- Window Controls -->
+                            <div class="h-10 border-b border-slate-700 flex items-center px-4 gap-2 bg-slate-800/80">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+
+                            <!-- Content Views -->
+
+                            <!-- Evaluation View -->
+                            <div id="view-eval" class="p-6 h-full text-white tab-content">
+                                <div class="flex gap-6 h-full">
+                                    <div class="w-2/3 bg-slate-900/50 rounded-lg p-4 border border-slate-700 font-mono text-xs text-slate-300 overflow-hidden">
+                                        <p class="mb-4 text-slate-500">// Personal Statement Draft v2</p>
+                                        <p>Ever since I was a child, I have been fascinated by biology...</p>
+                                        <p class="mt-2 bg-red-500/20 px-1 rounded text-red-200 inline-block">However, this passion really took off when I...</p>
+                                        <p class="mt-2">I believe that my experience in the lab has prepared me...</p>
+                                    </div>
+                                    <div class="w-1/3 flex flex-col gap-4">
+                                        <div class="bg-slate-700 rounded-lg p-4 border border-slate-600">
+                                            <div class="text-xs text-slate-400 uppercase font-bold mb-1">Score</div>
+                                            <div class="text-3xl font-bold text-green-400">8.5/10</div>
+                                        </div>
+                                        <div class="bg-slate-700 rounded-lg p-4 border border-slate-600 flex-1">
+                                            <div class="text-xs text-slate-400 uppercase font-bold mb-2">Suggestions</div>
+                                            <div class="space-y-3">
+                                                <div class="flex gap-2 items-start text-xs">
+                                                    <i data-lucide="alert-circle" class="w-4 h-4 text-yellow-400 shrink-0"></i>
+                                                    <span class="text-slate-300">"really took off" is clichéd. Try "crystallized" or "accelerated".</span>
+                                                </div>
+                                                <div class="flex gap-2 items-start text-xs">
+                                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400 shrink-0"></i>
+                                                    <span class="text-slate-300">Strong opening hook.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Summary View -->
+                            <div id="view-summary" class="hidden p-6 h-full text-white tab-content">
+                                <div class="flex flex-col gap-4 h-full">
+                                    <div class="flex items-center gap-4 bg-slate-700/50 p-3 rounded-lg border border-slate-600">
+                                        <div class="w-10 h-10 bg-red-500/20 rounded flex items-center justify-center text-red-400 font-bold">PDF</div>
+                                        <div>
+                                            <div class="font-medium">Intro_to_Macroeconomics_Ch4.pdf</div>
+                                            <div class="text-xs text-slate-400">42 Pages • Uploaded 2 mins ago</div>
+                                        </div>
+                                        <button class="ml-auto bg-brand-600 px-3 py-1 rounded text-xs font-bold hover:bg-brand-500">Summarize</button>
+                                    </div>
+                                    <div class="flex-1 bg-slate-900/50 rounded-lg p-6 border border-slate-700 overflow-y-auto">
+                                        <h3 class="text-lg font-bold text-slate-200 mb-4">Key Takeaways</h3>
+                                        <ul class="space-y-4">
+                                            <li class="flex gap-3">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+                                                <p class="text-sm text-slate-300"><strong>GDP Limitations:</strong> GDP measures production but fails to account for income inequality or environmental degradation.</p>
+                                            </li>
+                                            <li class="flex gap-3">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+                                                <p class="text-sm text-slate-300"><strong>Inflation vs Unemployment:</strong> The Phillips curve suggests an inverse relationship in the short run.</p>
+                                            </li>
+                                            <li class="flex gap-3">
+                                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+                                                <p class="text-sm text-slate-300"><strong>Fiscal Policy:</strong> Government spending multipliers are generally higher during recessions.</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Todo View -->
+                            <div id="view-todo" class="hidden p-6 h-full text-white tab-content">
+                                <div class="grid grid-cols-2 gap-6 h-full">
+                                    <div class="bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="font-bold text-sm text-slate-300">To Do</span>
+                                            <span class="bg-slate-700 px-2 py-0.5 rounded text-xs">3</span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="bg-slate-700 p-3 rounded border border-slate-600 shadow-sm cursor-move">
+                                                <div class="text-xs text-orange-400 font-bold mb-1">High Priority</div>
+                                                <div class="text-sm font-medium">History Paper Draft</div>
+                                                <div class="text-xs text-slate-400 mt-2 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> Due Tomorrow</div>
+                                            </div>
+                                            <div class="bg-slate-700 p-3 rounded border border-slate-600 shadow-sm opacity-60">
+                                                <div class="text-xs text-blue-400 font-bold mb-1">Medium</div>
+                                                <div class="text-sm font-medium">Read Chapter 5</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-700/30 rounded-lg p-4 border border-slate-600">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="font-bold text-sm text-slate-300">In Progress</span>
+                                            <span class="bg-slate-700 px-2 py-0.5 rounded text-xs">1</span>
+                                        </div>
+                                        <div class="bg-slate-700 p-3 rounded border border-slate-600 shadow-sm border-l-4 border-l-brand-500">
+                                            <div class="text-xs text-purple-400 font-bold mb-1">Research</div>
+                                            <div class="text-sm font-medium">Lab Report Analysis</div>
+                                            <div class="mt-2 h-1 bg-slate-800 rounded overflow-hidden">
+                                                <div class="w-1/2 h-full bg-brand-500"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Calendar View -->
+                            <div id="view-calendar" class="hidden p-6 h-full text-white tab-content">
+                                <div class="flex flex-col h-full">
+                                    <div class="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                                        <h3 class="font-bold text-lg">October 2024</h3>
+                                        <div class="flex gap-2">
+                                            <div class="w-6 h-6 bg-slate-700 rounded flex items-center justify-center hover:bg-slate-600 cursor-pointer"><</div>
+                                            <div class="w-6 h-6 bg-slate-700 rounded flex items-center justify-center hover:bg-slate-600 cursor-pointer">></div>
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-7 gap-1 text-center text-xs text-slate-400 mb-2">
+                                        <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                                    </div>
+                                    <div class="grid grid-cols-7 gap-1 h-full">
+                                        <div class="bg-slate-800/50 rounded border border-slate-700/50 p-1 text-xs text-slate-500">29</div>
+                                        <div class="bg-slate-800/50 rounded border border-slate-700/50 p-1 text-xs text-slate-500">30</div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1 relative">
+                                            <span class="text-xs text-white">1</span>
+                                            <div class="mt-1 w-full bg-red-500/20 text-red-300 text-[10px] px-1 rounded truncate border border-red-500/30">Calc Midterm</div>
+                                        </div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1">
+                                            <span class="text-xs text-white">2</span>
+                                            <div class="mt-1 w-full bg-blue-500/20 text-blue-300 text-[10px] px-1 rounded truncate border border-blue-500/30">Study Group</div>
+                                        </div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1">
+                                            <span class="text-xs text-white">3</span>
+                                        </div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1">
+                                            <span class="text-xs text-white">4</span>
+                                            <div class="mt-1 w-full bg-green-500/20 text-green-300 text-[10px] px-1 rounded truncate border border-green-500/30">Paper Due</div>
+                                        </div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1">
+                                            <span class="text-xs text-white">5</span>
+                                        </div>
+                                        <!-- Row 2 Mock -->
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">6</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">7</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">8</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">9</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">10</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">11</span></div>
+                                        <div class="bg-slate-700/50 rounded border border-slate-600 p-1"><span class="text-xs text-white">12</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-8">Trusted by students at</p>
+            <div class="flex flex-wrap justify-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Simple Text Logos for mock -->
+                <span class="text-xl font-serif font-bold text-slate-800">Stanford</span>
+                <span class="text-xl font-serif font-bold text-slate-800">MIT</span>
+                <span class="text-xl font-serif font-bold text-slate-800">Oxford</span>
+                <span class="text-xl font-serif font-bold text-slate-800">Harvard</span>
+                <span class="text-xl font-serif font-bold text-slate-800">Berkeley</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section removed as requested -->
+
+    <!-- Footer -->
+    <footer class="bg-white pt-16 pb-8 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-brand-600 rounded flex items-center justify-center text-white">
+                            <i data-lucide="graduation-cap" class="w-3 h-3"></i>
+                        </div>
+                        <span class="font-bold text-lg text-slate-900">ScholarOS</span>
+                    </div>
+                    <p class="text-sm text-slate-500">
+                        Making academic success accessible and organized for everyone.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Features</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Integrations</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Pricing</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Changelog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Blog</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Study Guides</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Help Center</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Privacy</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Terms</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-400">© 2024 ScholarOS Inc. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="github" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Feature Switcher Logic
+        function switchTab(tabId) {
+            // Remove active class from all buttons
+            document.querySelectorAll('button[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('bg-slate-50', 'border-brand-200', 'shadow-sm');
+                btn.classList.add('border-transparent');
+
+                // Reset icon colors
+                const icon = btn.querySelector('i');
+                const title = btn.querySelector('h4');
+                const desc = btn.querySelector('p');
+
+                icon.classList.remove('text-brand-600');
+                icon.classList.add('text-slate-400');
+
+                title.classList.remove('text-slate-900');
+                title.classList.add('text-slate-500');
+
+                // Re-initialize icon for the button to reset state properly if needed,
+                // but just changing classes works with Lucide SVG injection
+            });
+
+            // Add active class to clicked button
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('border-transparent');
+            activeBtn.classList.add('bg-slate-50', 'border-brand-200', 'shadow-sm');
+
+            // Highlight text/icon
+            const activeIcon = activeBtn.querySelector('i');
+            const activeTitle = activeBtn.querySelector('h4');
+
+            activeIcon.classList.remove('text-slate-400');
+            activeIcon.classList.add('text-brand-600');
+
+            activeTitle.classList.remove('text-slate-500');
+            activeTitle.classList.add('text-slate-900');
+
+            // Hide all views
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Show selected view
+            const selectedView = document.getElementById(`view-${tabId}`);
+            selectedView.classList.remove('hidden');
+            selectedView.classList.add('animate-fade-in');
+        }
+    </script>
+</body>
+</html>
