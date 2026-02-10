@@ -36,8 +36,27 @@ def ai_view(request: HttpRequest):
                                   'start by evaluating the application overall from 1 to 10'
                                   'Describe strengths, weaknesses and recommendations for improvement in 180-300 words'
                                   'You are given the following inputs:'
-                                  'GPA: {}, SAT: {}, Ranking: {}, Extracurriculars: {}, Essay: {}, hs courses:'.format(gpa, sat, rank, ecs, essay, hs_courses)
+                                  'GPA: {}, SAT: {}, Ranking: {}, Extracurriculars: {}, Essay: {}, hs courses: {}'.format(gpa, sat, rank, ecs, essay, hs_courses)
                        }],
         )
         return render(request, 'myapp/app_eval.html', {'gpa': gpa, 'response': response.message.content, 'ranking': rank, 'sat': sat})
     return render(request, 'myapp/app_eval.html')
+
+def image_testing_view(request: HttpRequest):
+    if request.method == 'POST':
+        img = request.FILES['image']
+
+        response = chat(
+            model='llama3.2-vision',
+            messages=[{
+                'role': 'user',
+                'content': 'What is in this image?',
+                'images': [img.read()]
+            }]
+        )
+
+        return render(request, 'myapp/vision_ai.html', {
+            'response': response.message.content
+        })
+
+    return render(request, 'myapp/vision_ai.html')
