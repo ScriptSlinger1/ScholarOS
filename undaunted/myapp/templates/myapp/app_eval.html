@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <div id="analysis-result" class="fade-in scroll-mt-10">
+        <div id="analysis-results" class="fade-in scroll-mt-10">
             <div class="relative bg-white rounded-3xl border border-brand-100 shadow-2xl shadow-brand-900/5 overflow-hidden ring-4 ring-brand-50/50">
 
                 <div class="bg-gradient-to-br from-brand-600 to-purple-700 p-8 md:p-10 text-white relative overflow-hidden">
@@ -200,6 +200,17 @@
                  resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
+        document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+
+    // Only scroll if the server explicitly says this is a new result
+    {% if scroll_to_results %}
+        const resultBox = document.getElementById('analysis-result');
+        if(resultBox) {
+             resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    {% endif %}
+});
     </script>
 </body>
 </html>

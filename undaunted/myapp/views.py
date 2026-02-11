@@ -60,3 +60,5 @@ def image_testing_view(request: HttpRequest):
         })
 
     return render(request, 'myapp/vision_ai.html')
+
+

@@ -67,7 +67,7 @@
                     <i data-lucide="calendar-clock" class="w-5 h-5"></i>
                     Schedule
                 </button>
-                <button onclick="switchTab('college')" id="nav-college" class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
+                <button onclick="location.href='{% url 'myapp:ai' %}'" id="nav-college" class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
                     <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                     College Prep
                 </button>
@@ -198,6 +198,11 @@
 
                 <!-- VIEW: SCHEDULE -->
                 <div id="view-schedule" class="hidden fade-in">
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Scheduled Days</h3>
+                        <div id="scheduleDayPicker" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                            </div>
+                    </div>
                     <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                         <div>
                             <h1 class="text-3xl font-bold text-slate-900">Class Schedule</h1>
@@ -215,38 +220,6 @@
                     </div>
                 </div>
                 <div id="view-college" class="hidden space-y-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-slate-900">Admissions AI</h1>
-        <p class="text-slate-500 mt-1">Ruthless evaluation powered by llama3.2.</p>
-    </div>
-
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
-        <form method="POST" action="{% url 'myapp:ai' %}" class="space-y-6">
-            {% csrf_token %}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">GPA</label>
-                    <input type="number" name="gpa" step="0.01" value="{{ gpa|default:'' }}" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="4.0" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">SAT Score</label>
-                    <input type="number" name="sat" value="{{ sat|default:'' }}" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="1550">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Ranking</label>
-                    <input type="text" name="ranking" value="{{ ranking|default:'' }}" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Top 5%">
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-slate-700 mb-1">Personal Essay</label>
-                <textarea name="essay" rows="5" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none resize-none" placeholder="Paste essay text here...">{{ essay|default:'' }}</textarea>
-            </div>
-
-            <button type="submit" class="w-full py-3 bg-slate-900 text-white rounded-xl font-semibold hover:bg-slate-800 transition-all shadow-lg">
-                Generate Ruthless Evaluation
-            </button>
-        </form>
     </div>
 
     {% if response %}
@@ -320,6 +293,10 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1">Event Title</label>
                         <input type="text" id="schTitle" required class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="e.g., Study Group">
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+                        <input type="date" id="schDate" required class="w-full px-4 py-2 rounded-lg border border-slate-200">
+                    </div>
                     <div class="flex gap-4">
                         <div class="flex-1">
                             <label class="block text-sm font-medium text-slate-700 mb-1">Time</label>
@@ -345,294 +322,218 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // If Django sends back a response, automatically switch to the college tab
-            {% if response %}
-                switchTab('college');
-            {% endif %}
+        // --- 1. DATA INITIALIZATION ---
+let tasks = JSON.parse(localStorage.getItem('scholaros_tasks')) || [
+    { id: 1, title: 'History Research Paper', detail: 'History 101 • Final Draft', due: 'Due Today', color: 'red', completed: false },
+    { id: 2, title: 'Calculus Problem Set #4', detail: 'Math 202 • 15 Problems', due: 'Tomorrow', color: 'orange', completed: false }
+];
 
-            lucide.createIcons();
-            updateDate();
-        });
-        // --- DATA ---
-        let tasks = JSON.parse(localStorage.getItem('scholaros_tasks')) || [
-            { id: 1, title: 'History Research Paper', detail: 'History 101 • Final Draft', due: 'Due Today', color: 'red', completed: false },
-            { id: 2, title: 'Calculus Problem Set #4', detail: 'Math 202 • 15 Problems', due: 'Tomorrow', color: 'orange', completed: false },
-            { id: 3, title: 'Read "The Great Gatsby"', detail: 'Lit 300 • Preparation for quiz', due: 'Friday', color: 'blue', completed: false }
-        ];
+let schedule = JSON.parse(localStorage.getItem('scholaros_schedule')) || [
+    { id: 101, date: '2026-02-11', time: '09:00', displayTime: '09:00 AM', title: 'Linear Algebra', location: 'Room 304', duration: '1hr 30m' },
+    { id: 102, date: '2026-02-12', time: '12:30', displayTime: '12:30 PM', title: 'Physics Lab', location: 'Science Bldg', duration: '2hr' }
+];
 
-        let schedule = JSON.parse(localStorage.getItem('scholaros_schedule')) || [
-            { id: 101, time: '09:00', displayTime: '09:00 AM', title: 'Linear Algebra Lecture', location: 'Room 304', duration: '1hr 30m', type: 'brand' },
-            { id: 102, time: '12:30', displayTime: '12:30 PM', title: 'Study Group: Physics', location: 'Library', duration: '1hr', type: 'slate' },
-            { id: 103, time: '15:00', displayTime: '03:00 PM', title: 'Project Meeting', location: 'Zoom', duration: '45m', type: 'slate' }
-        ];
+// Global filter to track which day we are viewing in the schedule tab
+let currentScheduleFilter = new Date().toISOString().split('T')[0];
 
-        function switchTab(tabId) {
-            ['dashboard', 'todo', 'schedule'].forEach(id => {
-                document.getElementById(`view-${id}`).classList.add('hidden');
-                const navBtn = document.getElementById(`nav-${id}`);
+// --- 2. CORE NAVIGATION ---
+function switchTab(tabId) {
+    const tabs = ['dashboard', 'todo', 'schedule', 'college'];
+    tabs.forEach(id => {
+        const view = document.getElementById(`view-${id}`);
+        const navBtn = document.getElementById(`nav-${id}`);
+        if (view) view.classList.toggle('hidden', id !== tabId);
+        if (navBtn) {
+            if (id === tabId) {
+                navBtn.classList.add('bg-brand-50', 'text-brand-700');
+                navBtn.classList.remove('text-slate-600');
+            } else {
                 navBtn.classList.remove('bg-brand-50', 'text-brand-700');
-                navBtn.classList.add('text-slate-600', 'hover:bg-slate-50', 'hover:text-slate-900');
-            });
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            activeBtn.classList.add('bg-brand-50', 'text-brand-700');
-            renderAll();
+                navBtn.classList.add('text-slate-600');
+            }
         }
+    });
+    renderAll();
+}
 
-        function renderAll() {
-            renderDashboard();
-            renderTodoList();
-            renderScheduleList();
-            updateDate();
-            lucide.createIcons();
-        }
+// --- 3. RENDERING LOGIC ---
+function renderAll() {
+    renderDashboard();
+    renderTodoList();
+    renderDayPicker();
+    renderScheduleList(currentScheduleFilter);
+    updateDate();
+    lucide.createIcons();
+}
 
-        function renderDashboard() {
-    // 1. RESTORED TASK STATISTICS LOGIC
+function renderDashboard() {
+    // Stats Update
     const activeCount = tasks.filter(t => !t.completed).length;
     const total = tasks.length;
-    const completedCount = tasks.filter(t => t.completed).length;
-    const rate = total === 0 ? 0 : Math.round((completedCount / total) * 100);
-
+    const rate = total === 0 ? 0 : Math.round((tasks.filter(t => t.completed).length / total) * 100);
     document.getElementById('dashActiveCount').innerText = activeCount;
     document.getElementById('dashCompletionRate').innerText = `${rate}%`;
 
-    // 2. RENDER TASK PREVIEW LIST
+    // Task Preview
     const dashTaskContainer = document.getElementById('dash-taskList');
     dashTaskContainer.innerHTML = '';
-    const topTasks = tasks.filter(t => !t.completed).slice(0, 3);
+    tasks.filter(t => !t.completed).slice(0, 3).forEach(task => {
+        dashTaskContainer.innerHTML += `
+            <div class="p-4 flex items-start gap-3 hover:bg-slate-50 transition-colors">
+                <div class="mt-1 w-2 h-2 rounded-full ${getDotColor(task.color)}"></div>
+                <div class="flex-1"><h3 class="font-semibold text-slate-800 text-sm">${task.title}</h3></div>
+            </div>`;
+    });
 
-    if (topTasks.length === 0) {
-        dashTaskContainer.innerHTML = '<div class="p-6 text-center text-slate-400 text-sm">No pending tasks.</div>';
-    } else {
-        topTasks.forEach(task => {
-            dashTaskContainer.innerHTML += `
-                <div class="p-4 flex items-start gap-3 hover:bg-slate-50 transition-colors">
-                    <div class="mt-1 w-2 h-2 rounded-full ${getDotColor(task.color)}"></div>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <h3 class="font-semibold text-slate-800 text-sm">${task.title}</h3>
-                            <span class="text-xs text-slate-400">${task.due}</span>
-                        </div>
-                    </div>
-                </div>`;
-        });
-    }
+    renderCalendar();
+}
 
-    // 3. CALENDAR GRID LOGIC
+function renderCalendar() {
     const grid = document.getElementById('calendarGrid');
+    if (!grid) return;
     grid.innerHTML = '';
-
     const now = new Date();
-    const month = now.getMonth();
     const year = now.getFullYear();
-    const today = now.getDate();
-
+    const month = now.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // 1. Fill empty slots - Updated to match new height
     for (let i = 0; i < firstDay; i++) {
-        grid.innerHTML += `<div class="bg-slate-50/50 min-h-[110px] p-2 border-b border-r border-slate-100"></div>`;
+        grid.innerHTML += `<div class="bg-slate-50/30 min-h-[80px] border-b border-r border-slate-100"></div>`;
     }
 
-    // 2. Fill actual days
     for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === today;
-        let eventHtml = '';
+        const isToday = d === now.getDate();
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const dayEvents = schedule.filter(item => item.date === dateStr);
 
-        if (isToday) {
-            // We loop through ALL items in the schedule array
-            schedule.forEach(item => {
-                eventHtml += `
-                    <div class="px-2 py-1 bg-brand-500 text-[10px] text-white rounded-md shadow-sm leading-tight">
-                        <div class="font-bold opacity-80">${item.displayTime}</div>
-                        <div class="truncate">${item.title}</div>
-                    </div>`;
-            });
-        }
-
-        // Changed h-14 to min-h-[110px] and added 'flex flex-col'
         grid.innerHTML += `
-            <div class="bg-white min-h-[110px] p-2 border-b border-r border-slate-100 flex flex-col gap-1 relative ${isToday ? 'bg-brand-50/30 ring-2 ring-inset ring-brand-500 z-10' : ''}">
-                <span class="text-xs font-bold ${isToday ? 'text-brand-600' : 'text-slate-400'}">${d}</span>
-                <div class="flex flex-col gap-1.5 w-full">
-                    ${eventHtml}
+            <div onclick="handleDayClick('${dateStr}')"
+                 class="group relative min-h-[80px] p-2 border-b border-r border-slate-100 cursor-pointer transition-all hover:bg-brand-50/20 flex flex-col justify-between bg-white">
+                <span class="text-xs font-bold transition-colors ${isToday ? 'bg-brand-600 text-white w-6 h-6 flex items-center justify-center rounded-lg shadow-md' : 'text-slate-400 group-hover:text-slate-900'}">${d}</span>
+                <div class="flex gap-1 mt-auto overflow-hidden">
+                    ${dayEvents.length > 0 ? dayEvents.map((_, i) => `<div class="h-1.5 flex-1 rounded-full bg-brand-500 animate-in slide-in-from-bottom" style="animation-delay: ${i * 100}ms"></div>`).join('') : `<div class="h-1.5 w-full rounded-full bg-slate-100"></div>`}
                 </div>
-            </div>
-        `;
+            </div>`;
     }
 }
 
-        function renderTodoList() {
-            const container = document.getElementById('full-taskList');
-            container.innerHTML = '';
-            const sortedTasks = [...tasks].sort((a, b) => a.completed - b.completed);
+function handleDayClick(dateString) {
+    currentScheduleFilter = dateString;
+    switchTab('schedule');
+}
 
-            if(sortedTasks.length === 0) {
-                container.innerHTML = '<div class="p-10 text-center text-slate-400">List is empty</div>';
-                return;
-            }
+function renderDayPicker() {
+    const picker = document.getElementById('scheduleDayPicker');
+    if (!picker) return;
+    picker.innerHTML = '';
+    const uniqueDates = [...new Set(schedule.map(item => item.date))].sort();
 
-            sortedTasks.forEach(task => {
-                container.innerHTML += `
-                    <div class="p-5 flex items-start gap-4 hover:bg-slate-50 transition-colors group ${task.completed ? 'opacity-50' : ''}">
-                        <div class="mt-1 cursor-pointer" onclick="toggleTask(${task.id})">
-                            <div class="w-6 h-6 rounded border-2 ${task.completed ? 'bg-brand-600 border-brand-600' : 'border-slate-300'} flex items-center justify-center">
-                                ${task.completed ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
-                            </div>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-slate-900 ${task.completed ? 'line-through' : ''}">${task.title}</h3>
-                            <p class="text-sm text-slate-500">${task.detail}</p>
-                        </div>
-                        <button onclick="deleteTask(${task.id})" class="p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>`;
-            });
-            lucide.createIcons();
-        }
-
-        function renderScheduleList() {
-            const container = document.getElementById('full-scheduleList');
-            container.innerHTML = '<div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>';
-            const sortedSch = [...schedule].sort((a,b) => a.time.localeCompare(b.time));
-
-            if (sortedSch.length === 0) {
-                 container.innerHTML += '<div class="text-center py-10 text-slate-400">No events.</div>';
-                 return;
-            }
-
-            sortedSch.forEach(item => {
-                container.innerHTML += `
-                    <div class="relative flex gap-6 group pl-6">
-                        <div class="absolute left-[-2px] top-1.5 w-4 h-4 rounded-full bg-brand-600 border-2 border-white z-10"></div>
-                        <div class="flex-1 flex gap-4 items-start">
-                            <div class="w-20 pt-1">
-                                <p class="text-sm font-bold text-slate-900">${item.displayTime}</p>
-                                <p class="text-xs text-slate-400">${item.duration}</p>
-                            </div>
-                            <div class="flex-1 bg-white border border-slate-200 p-4 rounded-xl shadow-sm relative group">
-                                <h3 class="font-bold text-slate-900 text-sm">${item.title}</h3>
-                                <p class="text-xs text-slate-500 mt-1">${item.location}</p>
-                                <button onclick="deleteSchedule(${item.id})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
-                                    <i data-lucide="x-circle" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-            lucide.createIcons();
-        }
-
-        function toggleTask(id) {
-            tasks = tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t);
-            saveAndRender();
-        }
-
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            saveAndRender();
-        }
-
-        function deleteSchedule(id) {
-            schedule = schedule.filter(s => s.id !== id);
-            saveAndRender();
-        }
-
-        function handleAddTask(e) {
-            e.preventDefault();
-            tasks.unshift({
-                id: Date.now(),
-                title: document.getElementById('taskTitle').value,
-                detail: document.getElementById('taskDetail').value,
-                due: document.getElementById('taskTag').value || 'Soon',
-                color: document.getElementById('taskColor').value,
-                completed: false
-            });
-            saveAndRender();
-            closeModals();
-            e.target.reset();
-        }
-
-        function handleAddSchedule(e) {
-            e.preventDefault();
-            const rawTime = document.getElementById('schTime').value;
-            const [h, m] = rawTime.split(':');
-            const d = new Date(); d.setHours(h); d.setMinutes(m);
-            schedule.push({
-                id: Date.now(),
-                time: rawTime,
-                displayTime: d.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }),
-                title: document.getElementById('schTitle').value,
-                location: document.getElementById('schLoc').value,
-                duration: document.getElementById('schDuration').value || '1h',
-                type: 'brand'
-            });
-            saveAndRender();
-            closeModals();
-            e.target.reset();
-        }
-
-        function saveAndRender() {
-            localStorage.setItem('scholaros_tasks', JSON.stringify(tasks));
-            localStorage.setItem('scholaros_schedule', JSON.stringify(schedule));
-            renderAll();
-        }
-
-        function getDotColor(color) {
-            return color === 'red' ? 'bg-red-500' : color === 'orange' ? 'bg-orange-500' : 'bg-blue-500';
-        }
-
-        function updateDate() {
-            document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-        }
-
-        function openTaskModal() { document.getElementById('taskModal').classList.remove('hidden'); }
-        function openScheduleModal() { document.getElementById('scheduleModal').classList.remove('hidden'); }
-        function closeModals() {
-            document.getElementById('taskModal').classList.add('hidden');
-            document.getElementById('scheduleModal').classList.add('hidden');
-        }
-
-        document.addEventListener('DOMContentLoaded', renderAll);
-    </script>
-<script>
-        function switchTab(tabId) {
-            ['dashboard', 'todo', 'schedule', 'college'].forEach(id => {
-        const view = document.getElementById(`view-${id}`);
-        if (view) view.classList.add('hidden');
-
-        const navBtn = document.getElementById(`nav-${id}`);
-        if (navBtn) {
-            navBtn.classList.remove('bg-brand-50', 'text-brand-700');
-            navBtn.classList.add('text-slate-600', 'hover:bg-slate-50', 'hover:text-slate-900');
-        }
+    uniqueDates.forEach(dateStr => {
+        const isSelected = dateStr === currentScheduleFilter;
+        const dateObj = new Date(dateStr + 'T00:00:00');
+        picker.innerHTML += `
+            <button onclick="filterSchedule('${dateStr}')"
+                class="flex flex-col items-center min-w-[64px] p-3 rounded-2xl border transition-all ${isSelected ? 'bg-brand-600 border-brand-600 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-600'}">
+                <span class="text-[10px] font-bold uppercase opacity-80">${dateObj.toLocaleDateString('en-US', { weekday: 'short' })}</span>
+                <span class="text-lg font-bold">${dateObj.toLocaleDateString('en-US', { day: 'numeric' })}</span>
+            </button>`;
     });
+}
 
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-50', 'hover:text-slate-900');
-                activeBtn.classList.add('bg-brand-50', 'text-brand-700');
-            }
-        }
+function filterSchedule(date) {
+    currentScheduleFilter = date;
+    renderDayPicker();
+    renderScheduleList(date);
+}
 
-        function updateDate() {
-            const dateEl = document.getElementById('currentDateDisplay');
-            if(dateEl) {
-                dateEl.innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-            }
-        }
+function renderScheduleList(filterDate) {
+    const container = document.getElementById('full-scheduleList');
+    if (!container) return;
+    container.innerHTML = '<div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            updateDate();
-            // Start on college tab for this demo
-            switchTab('college');
-        });
+    const dayEvents = schedule.filter(item => item.date === filterDate).sort((a, b) => a.time.localeCompare(b.time));
+    if (dayEvents.length === 0) {
+        container.innerHTML += `<div class="text-center py-10 text-slate-400">No events on this day.</div>`;
+        return;
+    }
+
+    dayEvents.forEach(item => {
+        container.innerHTML += `
+            <div class="relative flex gap-6 group pl-6 mb-6">
+                <div class="absolute left-[-2px] top-1.5 w-4 h-4 rounded-full bg-brand-600 border-2 border-white z-10"></div>
+                <div class="flex-1 flex gap-4 items-start">
+                    <div class="w-20 pt-1"><p class="text-sm font-bold text-slate-900">${item.displayTime}</p></div>
+                    <div class="flex-1 bg-white border border-slate-200 p-4 rounded-xl shadow-sm relative group">
+                        <h3 class="font-bold text-slate-900 text-sm">${item.title}</h3>
+                        <p class="text-xs text-slate-500 mt-1">${item.location}</p>
+                        <button onclick="deleteSchedule(${item.id})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="x-circle" class="w-5 h-5"></i></button>
+                    </div>
+                </div>
+            </div>`;
+    });
+    lucide.createIcons();
+}
+
+function renderTodoList() {
+    const container = document.getElementById('full-taskList');
+    if (!container) return;
+    container.innerHTML = '';
+    [...tasks].sort((a, b) => a.completed - b.completed).forEach(task => {
+        container.innerHTML += `
+            <div class="p-5 flex items-start gap-4 hover:bg-slate-50 transition-colors group ${task.completed ? 'opacity-50' : ''}">
+                <div class="mt-1 cursor-pointer" onclick="toggleTask(${task.id})">
+                    <div class="w-6 h-6 rounded border-2 ${task.completed ? 'bg-brand-600 border-brand-600' : 'border-slate-300'} flex items-center justify-center">
+                        ${task.completed ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
+                    </div>
+                </div>
+                <div class="flex-1"><h3 class="font-semibold text-slate-900 ${task.completed ? 'line-through' : ''}">${task.title}</h3></div>
+                <button onclick="deleteTask(${task.id})" class="p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+            </div>`;
+    });
+    lucide.createIcons();
+}
+
+// --- 4. DATA ACTIONS ---
+function handleAddTask(e) {
+    e.preventDefault();
+    tasks.unshift({ id: Date.now(), title: document.getElementById('taskTitle').value, detail: document.getElementById('taskDetail').value, due: document.getElementById('taskTag').value || 'Soon', color: document.getElementById('taskColor').value, completed: false });
+    saveAndRender(); closeModals(); e.target.reset();
+}
+
+function handleAddSchedule(e) {
+    e.preventDefault();
+    const rawTime = document.getElementById('schTime').value;
+    const rawDate = document.getElementById('schDate').value;
+    const [h, m] = rawTime.split(':');
+    const d = new Date(); d.setHours(h); d.setMinutes(m);
+
+    schedule.push({ id: Date.now(), date: rawDate, time: rawTime, displayTime: d.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }), title: document.getElementById('schTitle').value, location: document.getElementById('schLoc').value, duration: document.getElementById('schDuration').value || '1h' });
+    currentScheduleFilter = rawDate; // Switch view to the date just added
+    saveAndRender(); closeModals(); e.target.reset();
+}
+
+function saveAndRender() {
+    localStorage.setItem('scholaros_tasks', JSON.stringify(tasks));
+    localStorage.setItem('scholaros_schedule', JSON.stringify(schedule));
+    renderAll();
+}
+
+function toggleTask(id) { tasks = tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t); saveAndRender(); }
+function deleteTask(id) { tasks = tasks.filter(t => t.id !== id); saveAndRender(); }
+function deleteSchedule(id) { schedule = schedule.filter(s => s.id !== id); saveAndRender(); }
+function getDotColor(color) { const colors = { red: 'bg-red-500', orange: 'bg-orange-500', blue: 'bg-blue-500' }; return colors[color] || 'bg-slate-500'; }
+function updateDate() { const el = document.getElementById('currentDateDisplay'); if (el) el.innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }); }
+function openTaskModal() { document.getElementById('taskModal').classList.remove('hidden'); }
+function openScheduleModal() { document.getElementById('scheduleModal').classList.remove('hidden'); }
+function closeModals() { document.getElementById('taskModal').classList.add('hidden'); document.getElementById('scheduleModal').classList.add('hidden'); }
+
+// --- 5. INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    switchTab('dashboard');
+    {% if response %} switchTab('college'); {% endif %}
+    renderAll();
+});
     </script>
 </body>
 </html>
