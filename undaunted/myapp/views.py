@@ -48,6 +48,8 @@ def smart_notes_view(request: HttpRequest):
         notes = request.POST.get('notes', '').strip()
         if notes:
             prompt = f"""
+            DO NOT USE * SYMBOL
+                
             You are an advanced academic reasoning system designed to transform messy student notes
             into precise, structured, high-retention learning material. Your output must be conceptually
             accurate, logically connected, and pedagogically optimized. First perform a silent reasoning
