@@ -42,23 +42,56 @@ def ai_view(request: HttpRequest):
         return render(request, 'myapp/app_eval.html', {'gpa': gpa, 'response': response.message.content, 'ranking': rank, 'sat': sat})
     return render(request, 'myapp/app_eval.html')
 
-def image_testing_view(request: HttpRequest):
+
+def smart_notes_view(request: HttpRequest):
     if request.method == 'POST':
-        img = request.FILES['image']
+        notes = request.POST.get('notes', '').strip()
+        if notes:
+            prompt = f"""
+            You are an advanced academic reasoning system designed to transform messy student notes
+            into precise, structured, high-retention learning material. Your output must be conceptually
+            accurate, logically connected, and pedagogically optimized. First perform a silent reasoning
+            and verification pass to ensure scientific correctness and conceptual clarity. Identify and
+            correct any factual, logical, or conceptual errors before producing output. Do not reveal
+            your reasoning.
 
-        response = chat(
-            model='llama3.2-vision',
-            messages=[{
-                'role': 'user',
-                'content': 'What is in this image?',
-                'images': [img.read()]
-            }]
-        )
+            Output must strictly follow this structure and order with no deviations:
 
-        return render(request, 'myapp/vision_ai.html', {
-            'response': response.message.content
-        })
+            Clean Notes: Rewrite the content into clear, concise, logically ordered bullet points,
+            progressing from fundamental concepts to advanced ones, emphasizing causal relationships
+            and conceptual flow.
 
-    return render(request, 'myapp/vision_ai.html')
+            Concept Summary: Write 3–6 sentences explaining the core ideas, underlying mechanisms,
+            purpose, and real-world relevance using simple but precise language.
 
+            Concept Graph: Generate a causal and dependency-based knowledge graph using the format
+            “Concept A → relationship → Concept B”. Focus on mechanisms, energy flow, dependencies,
+            and transformations. Avoid location-only links unless essential.
+
+            Key Definitions: List all essential terms with simple definitions and one intuitive example each.
+            Definitions must prioritize understanding, not memorization.
+
+            Active Recall Questions: Generate exactly 3 easy, 3 medium, and 3 hard questions that test
+            conceptual understanding, causal reasoning, and application. Avoid definition-only questions.
+            Write the answers for these questions in the end of your response.
+
+            Misconceptions: Identify common student misunderstandings, explain why they occur, why they are
+            wrong, and how to avoid them.
+
+            Compression: Produce exactly 10 dense, information-rich lines that preserve at least 90% of the
+            total learning value. Each line must contain a distinct core idea. No filler, no repetition, no vagueness.
+
+            Rules: Be precise. Be rigorous. Enforce conceptual correctness. Prioritize causal understanding over memorization.
+            Avoid redundancy. Maintain strict format discipline. If scientific inaccuracies appear in the input, they must be corrected.
+
+            Input:
+            {notes}
+            """
+            response = chat(
+                model='llama3.2',
+                messages=[{'role': 'user', 'content': prompt}]
+            )
+            return render(request, 'myapp/smart_notes.html', {'output': response.message.content})
+
+    return render(request, 'myapp/smart_notes.html', {})
 
