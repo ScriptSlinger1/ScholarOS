@@ -68,7 +68,7 @@ Long-term, ScholarOS aims to:
 ## 🛠️ Setup Instructions
 
 ```bash
-git clone https://github.com/your-username/scholaros.git
+git clone https://github.com/ScriptSlinger1/ScholarOS.git
 cd scholaros
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
