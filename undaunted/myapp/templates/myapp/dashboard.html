@@ -74,15 +74,16 @@
             </nav>
 
             <div class="p-4 border-t border-slate-100">
-                <div class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300">
+                <a href="{% url 'myapp:profile' %}" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-brand-50 group cursor-pointer transition-all duration-200">
+                    <div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300 group-hover:border-brand-300 transition-colors">
                         <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="User" />
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-slate-900 truncate">Alex Student</p>
+                        <p class="text-sm font-semibold text-slate-900 truncate group-hover:text-brand-600">Alex Student</p>
                         <p class="text-xs text-slate-500 truncate">Pro Plan</p>
                     </div>
-                </div>
+                    <i data-lucide="settings" class="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </a>
             </div>
         </aside>
 

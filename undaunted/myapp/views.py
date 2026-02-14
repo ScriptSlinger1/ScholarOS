@@ -61,4 +61,14 @@ def image_testing_view(request: HttpRequest):
 
     return render(request, 'myapp/vision_ai.html')
 
+def about(request):
+    return render(request, 'myapp/about-us.html')
 
+def contact(request):
+    return render(request, 'myapp/contact-us.html')
+
+def demo(request):
+    return render(request, 'myapp/demo.html')
+
+def profile_view(request):
+    return render(request, 'myapp/profile.html')

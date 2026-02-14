@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact ScholarOS | Let's Talk Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #2563eb, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .blob { position: absolute; filter: blur(80px); opacity: 0.2; z-index: -1; }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-white overflow-x-hidden">
+
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <a href="{% url 'myapp:home' %}" class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold text-xl text-slate-900 tracking-tight">ScholarOS</span>
+            </a>
+            <div class="hidden md:flex gap-8 items-center text-sm font-medium">
+                <a href="{% url 'myapp:about' %}" class="hover:text-brand-600 transition-colors">About</a>
+                <a href="{% url 'myapp:demo' %}" class="hover:text-brand-600 transition-colors">Watch Demo</a>
+                <a href="{% url 'myapp:contact' %}" class="text-brand-600">Contact</a>
+            </div>
+            <a href="{% url 'myapp:dashboard' %}" class="ml-4 px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-semibold hover:bg-brand-700 transition-all">Sign In</a>
+        </div>
+    </nav>
+
+    <section class="relative pt-32 pb-24 overflow-hidden">
+        <div class="blob bg-blue-400 w-96 h-96 rounded-full top-0 -left-20"></div>
+        <div class="blob bg-purple-400 w-96 h-96 rounded-full -bottom-20 -right-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-xs font-semibold mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-brand-500"></span>
+                        We typically reply in under 2 hours
+                    </div>
+                    <h1 class="text-5xl font-bold text-slate-900 mb-6 leading-tight">Let’s build the <br><span class="gradient-text">future of study</span> together.</h1>
+                    <p class="text-lg text-slate-600 mb-10 max-w-lg">Whether you're a student with a feature request or a university looking for a partnership, we’d love to hear from you.</p>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="p-6 rounded-2xl border border-slate-100 bg-white/50 hover:border-brand-200 transition-colors group">
+                            <div class="w-10 h-10 bg-brand-50 rounded-xl flex items-center justify-center text-brand-600 mb-4 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold mb-1">Email Support</h4>
+                            <p class="text-sm text-slate-500 mb-2">For technical help</p>
+                            <a href="mailto:support@scholaros.com" class="text-brand-600 font-semibold text-sm">support@scholaros.com</a>
+                        </div>
+                        <div class="p-6 rounded-2xl border border-slate-100 bg-white/50 hover:border-purple-200 transition-colors group">
+                            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-4 group-hover:bg-purple-600 group-hover:text-white transition-all">
+                                <i data-lucide="message-square" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="font-bold mb-1">Live Chat</h4>
+                            <p class="text-sm text-slate-500 mb-2">Available 9am-5pm EST</p>
+                            <button class="text-purple-600 font-semibold text-sm">Start a conversation →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 md:p-10 rounded-[2rem] shadow-2xl shadow-brand-500/10 border border-white">
+                    <form class="space-y-5">
+                        <div class="grid grid-cols-2 gap-5">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">First Name</label>
+                                <input type="text" placeholder="Jane" class="w-full px-5 py-4 rounded-2xl bg-white border border-slate-200 focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all outline-none">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Last Name</label>
+                                <input type="text" placeholder="Doe" class="w-full px-5 py-4 rounded-2xl bg-white border border-slate-200 focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all outline-none">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</label>
+                            <input type="email" placeholder="jane@university.edu" class="w-full px-5 py-4 rounded-2xl bg-white border border-slate-200 focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">How can we help?</label>
+                            <textarea rows="4" placeholder="Tell us what's on your mind..." class="w-full px-5 py-4 rounded-2xl bg-white border border-slate-200 focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 transition-all outline-none resize-none"></textarea>
+                        </div>
+                        <button class="w-full py-5 bg-brand-600 text-white rounded-2xl font-bold shadow-xl shadow-brand-600/30 hover:bg-brand-700 hover:-translate-y-1 transition-all active:scale-95 flex items-center justify-center gap-2">
+                            Send Message <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Common Questions</h2>
+                <p class="text-slate-600">Quick answers to frequently asked support queries.</p>
+            </div>
+            <div class="space-y-4">
+                <details class="group bg-white rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-slate-900">
+                        Is there a student discount for ScholarOS Pro?
+                        <i data-lucide="chevron-down" class="w-5 h-5 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Yes! Students with a valid .edu email address receive 50% off all annual plans. You can apply this during the checkout process within the app.</p>
+                </details>
+                <details class="group bg-white rounded-2xl border border-slate-200 p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+                    <summary class="flex items-center justify-between font-bold text-slate-900">
+                        Can I integrate ScholarOS with Canvas or Blackboard?
+                        <i data-lucide="chevron-down" class="w-5 h-5 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Absolutely. ScholarOS supports full LMS integration. Simply go to Settings > Integrations to sync your assignments and deadlines automatically.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Our Hubs</h3>
+                    <p class="text-slate-500 mb-8">We’re a remote-first team, but you can find our flagship offices in these student-centric cities.</p>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer"><i data-lucide="twitter" class="w-5 h-5"></i></div>
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer"><i data-lucide="linkedin" class="w-5 h-5"></i></div>
+                        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer"><i data-lucide="github" class="w-5 h-5"></i></div>
+                    </div>
+                </div>
+                <div class="p-8 rounded-3xl bg-slate-900 text-white relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><i data-lucide="map-pin" class="w-24 h-24"></i></div>
+                    <h4 class="font-bold text-xl mb-2">San Francisco</h4>
+                    <p class="text-slate-400 text-sm">101 California St, Suite 2700<br>San Francisco, CA 94111</p>
+                </div>
+                <div class="p-8 rounded-3xl border border-slate-200 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"><i data-lucide="map-pin" class="w-24 h-24 text-brand-600"></i></div>
+                    <h4 class="font-bold text-xl mb-2 text-slate-900">London</h4>
+                    <p class="text-slate-500 text-sm">20-22 Wenlock Rd<br>London, N1 7GU, UK</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white pt-16 pb-8 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-brand-600 rounded flex items-center justify-center text-white">
+                            <i data-lucide="graduation-cap" class="w-3 h-3"></i>
+                        </div>
+                        <span class="font-bold text-lg text-slate-900">ScholarOS</span>
+                    </div>
+                    <p class="text-sm text-slate-500">
+                        Making academic success accessible and organized for everyone.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Features</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Integrations</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Pricing</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Changelog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Blog</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Study Guides</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Help Center</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-900 mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-brand-600">Privacy</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Terms</a></li>
+                        <li><a href="#" class="hover:text-brand-600">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-400">© 2024 ScholarOS Inc. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="github" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

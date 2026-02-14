@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | ScholarOS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-900 font-sans">
+
+    <div class="max-w-5xl mx-auto px-4 py-12">
+
+        <div class="relative mb-8 h-64 w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-[2.5rem] shadow-xl flex items-end p-8">
+    <div class="flex items-center gap-6">
+        <div class="relative group">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex"
+                 class="w-28 h-28 rounded-[1.5rem] bg-white p-1 shadow-lg border border-white/20">
+            <button class="absolute bottom-1 right-1 p-1.5 bg-white rounded-lg shadow-md text-slate-600 hover:text-brand-600 transition-colors">
+                <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+            </button>
+        </div>
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-white">Alex Student</h1>
+            <div class="flex items-center gap-2 mt-1">
+                <span class="px-2 py-0.5 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold rounded-md">CLASS OF 2026</span>
+                <span class="text-white/90 text-sm font-medium">Computer Science @ Stanford</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm">
+                    <h3 class="font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4 text-brand-600"></i> About Me
+                    </h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Passionate about AI ethics and distributed systems. Usually found in the Gates building drinking way too much espresso.
+                    </p>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 text-sm text-slate-600">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i> Palo Alto, CA
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-600" style="margin-bottom: 10px;">
+                            <i data-lucide="link" class="w-4 h-4"></i> <span class="text-brand-600">alex.dev</span>
+                        </li>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm">
+                    <h3 class="font-bold mb-4">Integrations</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span class="text-sm font-medium">GitHub</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">ACTIVE</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="layers" class="w-5 h-5 text-orange-500"></i>
+                                <span class="text-sm font-medium">Canvas</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">LINK</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 space-y-6">
+
+                <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold flex items-center gap-2">
+                            <i data-lucide="flame" class="w-5 h-5 text-orange-500"></i> Study Consistency
+                        </h3>
+                        <span class="text-xs text-slate-400 font-medium">Last 3 months</span>
+                    </div>
+                    <div class="flex gap-1.5 overflow-hidden">
+                        <script>
+                            for(let i=0; i<25; i++) {
+                                const levels = ['bg-slate-100', 'bg-blue-100', 'bg-blue-300', 'bg-blue-500', 'bg-blue-600'];
+                                const level = levels[Math.floor(Math.random() * levels.length)];
+                                document.write(`<div class="w-full aspect-square rounded-sm ${level}"></div>`);
+                            }
+                        </script>
+                    </div>
+                    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <p class="text-xl font-black text-slate-900">42</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">Day Streak</p>
+                        </div>
+                        <div class="text-center border-l border-slate-100">
+                            <p class="text-xl font-black text-slate-900">128h</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">Focus Time</p>
+                        </div>
+                        <div class="text-center border-l border-slate-100">
+                            <p class="text-xl font-black text-slate-900">14</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">Badges</p>
+                        </div>
+                        <div class="text-center border-l border-slate-100">
+                            <p class="text-xl font-black text-slate-900">Top 1%</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase">Global Rank</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-[2rem] border border-slate-200 hover:border-brand-500 transition-colors cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-brand-50 rounded-2xl text-brand-600">
+                                <i data-lucide="code-2" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-lg">A+</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-brand-600 transition-colors">CS106B: Data Structures</h4>
+                        <p class="text-xs text-slate-400 mt-1">Next exam: 4 days</p>
+                        <div class="mt-4 h-1.5 w-full bg-slate-100 rounded-full">
+                            <div class="h-full bg-brand-500 w-[85%] rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-[2rem] border border-slate-200 hover:border-purple-500 transition-colors cursor-pointer group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-3 bg-purple-50 rounded-2xl text-purple-600">
+                                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                            </div>
+                            <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-lg">A</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 group-hover:text-purple-600 transition-colors">AI & Society</h4>
+                        <p class="text-xs text-slate-400 mt-1">2 readings pending</p>
+                        <div class="mt-4 h-1.5 w-full bg-slate-100 rounded-full">
+                            <div class="h-full bg-purple-500 w-[40%] rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>
