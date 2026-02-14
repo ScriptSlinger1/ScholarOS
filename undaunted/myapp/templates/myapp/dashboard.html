@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,300 +39,340 @@
 </head>
 <body class="bg-slate-50 text-slate-800 relative overflow-x-hidden">
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
-    </div>
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+</div>
 
-    <div class="flex h-screen overflow-hidden">
+<div class="flex h-screen overflow-hidden">
 
-        <!-- Sidebar -->
-        <aside class="hidden md:flex w-64 flex-col bg-white border-r border-slate-200 h-full z-30">
-            <div class="p-6 flex items-center gap-3">
-                <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
-                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    </div>
-                <span class="text-xl font-bold text-slate-900 tracking-tight">ScholarOS</span>
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col bg-white border-r border-slate-200 h-full z-30">
+        <div class="p-6 flex items-center gap-3">
+            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
             </div>
-
-            <nav class="flex-1 px-4 space-y-2 mt-4">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 bg-brand-50 text-brand-700 rounded-xl font-medium transition-colors text-left">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                    Dashboard
-                </button>
-                <button onclick="switchTab('todo')" id="nav-todo" class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
-                    <i data-lucide="check-square" class="w-5 h-5"></i>
-                    To-Do List
-                </button>
-                <button onclick="switchTab('schedule')" id="nav-schedule" class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
-                    <i data-lucide="calendar-clock" class="w-5 h-5"></i>
-                    Schedule
-                </button>
-                <button onclick="location.href='{% url 'myapp:ai' %}'" id="nav-college" class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
-                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                    College Prep
-                </button>
-            </nav>
-
-            <div class="p-4 border-t border-slate-100">
-                <a href="{% url 'myapp:profile' %}" class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-brand-50 group cursor-pointer transition-all duration-200">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300 group-hover:border-brand-300 transition-colors">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="User" />
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-slate-900 truncate group-hover:text-brand-600">Alex Student</p>
-                        <p class="text-xs text-slate-500 truncate">Pro Plan</p>
-                    </div>
-                    <i data-lucide="settings" class="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                </a>
-            </div>
-        </aside>
-
-        <main class="flex-1 overflow-y-auto custom-scrollbar relative">
-            <header class="bg-white/80 backdrop-blur-md sticky top-0 z-20 border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-                <div class="flex items-center gap-4 md:hidden">
-                    <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    <span class="font-bold text-slate-900">ScholarOS</span>
-                </div>
-                <div class="hidden md:flex items-center gap-2 text-slate-400 text-sm">
-                    <span id="currentDateDisplay">Tuesday, October 24</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <button class="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </header>
-
-            <div class="p-6 md:p-8 max-w-7xl mx-auto min-h-screen">
-
-                <!-- VIEW: DASHBOARD -->
-                <div id="view-dashboard" class="fade-in block">
-                    <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-slate-900">Dashboard Overview</h1>
-                        <p class="text-slate-500 mt-1">Here is a summary of your day.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-5">
-                            <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center border border-green-100">
-                                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-slate-500 text-sm font-medium">Tasks Completed</p>
-                                <h3 id="dashCompletionRate" class="text-2xl font-bold text-slate-900">0%</h3>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-5">
-                            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
-                                <i data-lucide="clipboard-list" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-slate-500 text-sm font-medium">Active Tasks</p>
-                                <h3 id="dashActiveCount" class="text-2xl font-bold text-slate-900">0</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                                <h2 class="font-bold text-slate-900 text-lg flex items-center gap-2">
-                                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
-                                    Top Priority Tasks
-                                </h2>
-                                <button onclick="switchTab('todo')" class="text-brand-600 text-sm font-medium hover:text-brand-700">View All Tasks</button>
-                            </div>
-                            <div id="dash-taskList" class="divide-y divide-slate-50"></div>
-                        </div>
-
-                        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-fit">
-    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-        <h2 class="font-bold text-slate-900 text-lg flex items-center gap-2">
-            <i data-lucide="calendar" class="w-5 h-5 text-brand-500"></i>
-            <span id="calendarMonthYear">February 2026</span>
-        </h2>
-        <button onclick="switchTab('schedule')" class="text-brand-600 text-sm font-medium hover:text-brand-700">Full Schedule</button>
-    </div>
-
-    <div class="p-4">
-        <div class="grid grid-cols-7 mb-2">
-            <template x-for="day in ['S', 'M', 'T', 'W', 'T', 'F', 'S']">
-                <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest" x-text="day"></div>
-            </template>
-            <div class="text-center text-[10px] font-bold text-slate-400">S</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">M</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">T</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">W</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">T</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">F</div>
-            <div class="text-center text-[10px] font-bold text-slate-400">S</div>
+            <span class="text-xl font-bold text-slate-900 tracking-tight">ScholarOS</span>
         </div>
 
-        <div id="calendarGrid" class="grid grid-cols-7 bg-white border-t border-l border-slate-100 rounded-xl overflow-hidden shadow-sm">
-    </div>
-    </div>
-</div>
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard"
+                    class="w-full flex items-center gap-3 px-4 py-3 bg-brand-50 text-brand-700 rounded-xl font-medium transition-colors text-left">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                Dashboard
+            </button>
+            <button onclick="switchTab('todo')" id="nav-todo"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
+                <i data-lucide="check-square" class="w-5 h-5"></i>
+                To-Do List
+            </button>
+            <button onclick="switchTab('schedule')" id="nav-schedule"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
+                <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                Schedule
+            </button>
+            <button onclick="location.href='{% url 'myapp:ai' %}'" id="nav-college"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
+                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                College Prep
+            </button>
+            <button onclick="location.href='{% url 'myapp:smart_notes' %}'" id="nav-college"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl font-medium transition-colors text-left">
+                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                Smart Notes
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-slate-100">
+            <a href="{% url 'myapp:profile' %}"
+               class="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-brand-50 group cursor-pointer transition-all duration-200">
+                <div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden border border-slate-300 group-hover:border-brand-300 transition-colors">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="User"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-slate-900 truncate group-hover:text-brand-600">{{user.first_name}} {{user.last_name}}</p>
+                </div>
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto custom-scrollbar relative">
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-20 border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4 md:hidden">
+                <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <span class="font-bold text-slate-900">ScholarOS</span>
+            </div>
+            <div class="hidden md:flex items-center gap-2 text-slate-400 text-sm">
+                <span id="currentDateDisplay">Tuesday, October 24</span>
+            </div>
+            <div class="flex items-center gap-4">
+            </div>
+        </header>
+
+        <div class="p-6 md:p-8 max-w-7xl mx-auto min-h-screen">
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="view-dashboard" class="fade-in block">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-900">Dashboard Overview</h1>
+                    <p class="text-slate-500 mt-1">Here is a summary of your day.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center border border-green-100">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 text-sm font-medium">Tasks Completed</p>
+                            <h3 id="dashCompletionRate" class="text-2xl font-bold text-slate-900">0%</h3>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+                            <i data-lucide="clipboard-list" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-500 text-sm font-medium">Active Tasks</p>
+                            <h3 id="dashActiveCount" class="text-2xl font-bold text-slate-900">0</h3>
+                        </div>
                     </div>
                 </div>
 
-                <!-- VIEW: TO-DO LIST -->
-                <div id="view-todo" class="hidden fade-in">
-                    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                        <div>
-                            <h1 class="text-3xl font-bold text-slate-900">To-Do List</h1>
-                            <p class="text-slate-500 mt-1">Manage your assignments and homework.</p>
-                        </div>
-                        <button onclick="openTaskModal()" class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
-                            <i data-lucide="plus" class="w-4 h-4"></i> Add Task
-                        </button>
-                    </div>
-
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                        <div class="p-4 border-b border-slate-100 flex gap-4 bg-slate-50/50">
-                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider self-center">All Tasks</span>
+                        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                            <h2 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                                <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
+                                Top Priority Tasks
+                            </h2>
+                            <button onclick="switchTab('todo')"
+                                    class="text-brand-600 text-sm font-medium hover:text-brand-700">View All Tasks
+                            </button>
                         </div>
-                        <div id="full-taskList" class="divide-y divide-slate-50 min-h-[300px]"></div>
+                        <div id="dash-taskList" class="divide-y divide-slate-50"></div>
                     </div>
-                </div>
 
-                <!-- VIEW: SCHEDULE -->
-                <div id="view-schedule" class="hidden fade-in">
-                    <div class="mb-8">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Scheduled Days</h3>
-                        <div id="scheduleDayPicker" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden h-fit">
+                        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                            <h2 class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                                <i data-lucide="calendar" class="w-5 h-5 text-brand-500"></i>
+                                <span id="calendarMonthYear">February 2026</span>
+                            </h2>
+                            <button onclick="switchTab('schedule')"
+                                    class="text-brand-600 text-sm font-medium hover:text-brand-700">Full Schedule
+                            </button>
+                        </div>
+
+                        <div class="p-4">
+                            <div class="grid grid-cols-7 mb-2">
+                                <template x-for="day in ['S', 'M', 'T', 'W', 'T', 'F', 'S']">
+                                    <div class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest"
+                                         x-text="day"></div>
+                                </template>
+                                <div class="text-center text-[10px] font-bold text-slate-400">S</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">M</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">T</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">W</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">T</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">F</div>
+                                <div class="text-center text-[10px] font-bold text-slate-400">S</div>
                             </div>
-                    </div>
-                    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                        <div>
-                            <h1 class="text-3xl font-bold text-slate-900">Class Schedule</h1>
-                            <p class="text-slate-500 mt-1">Your timeline for classes and meetings.</p>
-                        </div>
-                        <button onclick="openScheduleModal()" class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
-                            <i data-lucide="plus" class="w-4 h-4"></i> Add Event
-                        </button>
-                    </div>
 
-                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-                        <div id="full-scheduleList" class="space-y-8 relative">
-                            <div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>
+                            <div id="calendarGrid"
+                                 class="grid grid-cols-7 bg-white border-t border-l border-slate-100 rounded-xl overflow-hidden shadow-sm">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="view-college" class="hidden space-y-8">
-    </div>
-
-    {% if response %}
-    <div class="bg-white rounded-2xl border-2 border-brand-500 shadow-xl overflow-hidden animate-in fade-in duration-500">
-        <div class="p-6 border-b border-slate-100 bg-brand-50/50 flex justify-between items-center">
-            <h3 class="font-bold text-brand-900 flex items-center gap-2">
-                <i data-lucide="shield-alert" class="w-5 h-5 text-brand-600"></i>
-                Admissions Verdict
-            </h3>
-            <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Cold Realism Mode</span>
-        </div>
-        <div class="p-8">
-            <div class="prose prose-slate max-w-none">
-                <p class="text-slate-800 leading-relaxed whitespace-pre-wrap font-medium">
-                    {{ response }}
-                </p>
             </div>
+
+            <!-- VIEW: TO-DO LIST -->
+            <div id="view-todo" class="hidden fade-in">
+                <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-900">To-Do List</h1>
+                        <p class="text-slate-500 mt-1">Manage your assignments and homework.</p>
+                    </div>
+                    <button onclick="openTaskModal()"
+                            class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Add Task
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-slate-100 flex gap-4 bg-slate-50/50">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider self-center">All Tasks</span>
+                    </div>
+                    <div id="full-taskList" class="divide-y divide-slate-50 min-h-[300px]"></div>
+                </div>
+            </div>
+
+            <!-- VIEW: SCHEDULE -->
+            <div id="view-schedule" class="hidden fade-in">
+                <div class="mb-8">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Scheduled Days</h3>
+                    <div id="scheduleDayPicker" class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                    </div>
+                </div>
+                <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-900">Class Schedule</h1>
+                        <p class="text-slate-500 mt-1">Your timeline for classes and meetings.</p>
+                    </div>
+                    <button onclick="openScheduleModal()"
+                            class="px-5 py-2.5 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Add Event
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+                    <div id="full-scheduleList" class="space-y-8 relative">
+                        <div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="view-college" class="hidden space-y-8">
+            </div>
+
+            {% if response %}
+            <div class="bg-white rounded-2xl border-2 border-brand-500 shadow-xl overflow-hidden animate-in fade-in duration-500">
+                <div class="p-6 border-b border-slate-100 bg-brand-50/50 flex justify-between items-center">
+                    <h3 class="font-bold text-brand-900 flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-brand-600"></i>
+                        Admissions Verdict
+                    </h3>
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Cold Realism Mode</span>
+                </div>
+                <div class="p-8">
+                    <div class="prose prose-slate max-w-none">
+                        <p class="text-slate-800 leading-relaxed whitespace-pre-wrap font-medium">
+                            {{ response }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </div>
-    {% endif %}
 </div>
+</main>
+</div>
+
+<!-- MODALS -->
+<div id="taskModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeModals()"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md border border-slate-200">
+        <h3 class="text-xl font-bold text-slate-900 mb-4">Add New Task</h3>
+        <form id="taskForm" onsubmit="handleAddTask(event)">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Task Title</label>
+                    <input type="text" id="taskTitle" required
+                           class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                           placeholder="e.g., Read Chapter 4">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Details</label>
+                    <input type="text" id="taskDetail"
+                           class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                           placeholder="e.g., Physics 101">
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Due Tag</label>
+                        <input type="text" id="taskTag"
+                               class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                               placeholder="e.g., Tomorrow">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Priority</label>
+                        <select id="taskColor"
+                                class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="red">High</option>
+                            <option value="orange">Medium</option>
+                            <option value="blue">Low</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </main>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" onclick="closeModals()"
+                        class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                        class="px-4 py-2 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors">
+                    Add Task
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- MODALS -->
-    <div id="taskModal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeModals()"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md border border-slate-200">
-            <h3 class="text-xl font-bold text-slate-900 mb-4">Add New Task</h3>
-            <form id="taskForm" onsubmit="handleAddTask(event)">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Task Title</label>
-                        <input type="text" id="taskTitle" required class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="e.g., Read Chapter 4">
+<div id="scheduleModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeModals()"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md border border-slate-200">
+        <h3 class="text-xl font-bold text-slate-900 mb-4">Add Schedule Item</h3>
+        <form id="scheduleForm" onsubmit="handleAddSchedule(event)">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Event Title</label>
+                    <input type="text" id="schTitle" required
+                           class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                           placeholder="e.g., Study Group">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+                    <input type="date" id="schDate" required
+                           class="w-full px-4 py-2 rounded-lg border border-slate-200">
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Time</label>
+                        <input type="time" id="schTime" required
+                               class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Details</label>
-                        <input type="text" id="taskDetail" class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="e.g., Physics 101">
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Due Tag</label>
-                            <input type="text" id="taskTag" class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="e.g., Tomorrow">
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Priority</label>
-                            <select id="taskColor" class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                <option value="red">High</option>
-                                <option value="orange">Medium</option>
-                                <option value="blue">Low</option>
-                            </select>
-                        </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Duration</label>
+                        <input type="text" id="schDuration"
+                               class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                               placeholder="1h 30m">
                     </div>
                 </div>
-                <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" onclick="closeModals()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors">Add Task</button>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                    <input type="text" id="schLoc"
+                           class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                           placeholder="Room 304 or Zoom">
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" onclick="closeModals()"
+                        class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                        class="px-4 py-2 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors">
+                    Add Event
+                </button>
+            </div>
+        </form>
     </div>
-
-    <div id="scheduleModal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeModals()"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md border border-slate-200">
-            <h3 class="text-xl font-bold text-slate-900 mb-4">Add Schedule Item</h3>
-            <form id="scheduleForm" onsubmit="handleAddSchedule(event)">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Event Title</label>
-                        <input type="text" id="schTitle" required class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="e.g., Study Group">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
-                        <input type="date" id="schDate" required class="w-full px-4 py-2 rounded-lg border border-slate-200">
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Time</label>
-                            <input type="time" id="schTime" required class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Duration</label>
-                            <input type="text" id="schDuration" class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="1h 30m">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Location</label>
-                        <input type="text" id="schLoc" class="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500" placeholder="Room 304 or Zoom">
-                    </div>
-                </div>
-                <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" onclick="closeModals()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors">Add Event</button>
-                </div>
-            </form>
-        </div>
-    </div>
+</div>
 
 
-    <script>
-        // --- 1. DATA INITIALIZATION ---
+<script>
+    // --- 1. DATA INITIALIZATION ---
 let tasks = JSON.parse(localStorage.getItem('scholaros_tasks')) || [
-    { id: 1, title: 'History Research Paper', detail: 'History 101 • Final Draft', due: 'Due Today', color: 'red', completed: false },
-    { id: 2, title: 'Calculus Problem Set #4', detail: 'Math 202 • 15 Problems', due: 'Tomorrow', color: 'orange', completed: false }
+{ id: 1, title: 'History Research Paper', detail: 'History 101 • Final Draft', due: 'Due Today', color: 'red', completed: false },
+{ id: 2, title: 'Calculus Problem Set #4', detail: 'Math 202 • 15 Problems', due: 'Tomorrow', color: 'orange', completed: false }
 ];
 
 let schedule = JSON.parse(localStorage.getItem('scholaros_schedule')) || [
-    { id: 101, date: '2026-02-11', time: '09:00', displayTime: '09:00 AM', title: 'Linear Algebra', location: 'Room 304', duration: '1hr 30m' },
-    { id: 102, date: '2026-02-12', time: '12:30', displayTime: '12:30 PM', title: 'Physics Lab', location: 'Science Bldg', duration: '2hr' }
+{ id: 101, date: '2026-02-11', time: '09:00', displayTime: '09:00 AM', title: 'Linear Algebra', location: 'Room 304', duration: '1hr 30m' },
+{ id: 102, date: '2026-02-12', time: '12:30', displayTime: '12:30 PM', title: 'Physics Lab', location: 'Science Bldg', duration: '2hr' }
 ];
 
 // Global filter to track which day we are viewing in the schedule tab
@@ -339,185 +380,185 @@ let currentScheduleFilter = new Date().toISOString().split('T')[0];
 
 // --- 2. CORE NAVIGATION ---
 function switchTab(tabId) {
-    const tabs = ['dashboard', 'todo', 'schedule', 'college'];
-    tabs.forEach(id => {
-        const view = document.getElementById(`view-${id}`);
-        const navBtn = document.getElementById(`nav-${id}`);
-        if (view) view.classList.toggle('hidden', id !== tabId);
-        if (navBtn) {
-            if (id === tabId) {
-                navBtn.classList.add('bg-brand-50', 'text-brand-700');
-                navBtn.classList.remove('text-slate-600');
-            } else {
-                navBtn.classList.remove('bg-brand-50', 'text-brand-700');
-                navBtn.classList.add('text-slate-600');
-            }
+const tabs = ['dashboard', 'todo', 'schedule', 'college'];
+tabs.forEach(id => {
+    const view = document.getElementById(`view-${id}`);
+    const navBtn = document.getElementById(`nav-${id}`);
+    if (view) view.classList.toggle('hidden', id !== tabId);
+    if (navBtn) {
+        if (id === tabId) {
+            navBtn.classList.add('bg-brand-50', 'text-brand-700');
+            navBtn.classList.remove('text-slate-600');
+        } else {
+            navBtn.classList.remove('bg-brand-50', 'text-brand-700');
+            navBtn.classList.add('text-slate-600');
         }
-    });
-    renderAll();
+    }
+});
+renderAll();
 }
 
 // --- 3. RENDERING LOGIC ---
 function renderAll() {
-    renderDashboard();
-    renderTodoList();
-    renderDayPicker();
-    renderScheduleList(currentScheduleFilter);
-    updateDate();
-    lucide.createIcons();
+renderDashboard();
+renderTodoList();
+renderDayPicker();
+renderScheduleList(currentScheduleFilter);
+updateDate();
+lucide.createIcons();
 }
 
 function renderDashboard() {
-    // Stats Update
-    const activeCount = tasks.filter(t => !t.completed).length;
-    const total = tasks.length;
-    const rate = total === 0 ? 0 : Math.round((tasks.filter(t => t.completed).length / total) * 100);
-    document.getElementById('dashActiveCount').innerText = activeCount;
-    document.getElementById('dashCompletionRate').innerText = `${rate}%`;
+// Stats Update
+const activeCount = tasks.filter(t => !t.completed).length;
+const total = tasks.length;
+const rate = total === 0 ? 0 : Math.round((tasks.filter(t => t.completed).length / total) * 100);
+document.getElementById('dashActiveCount').innerText = activeCount;
+document.getElementById('dashCompletionRate').innerText = `${rate}%`;
 
-    // Task Preview
-    const dashTaskContainer = document.getElementById('dash-taskList');
-    dashTaskContainer.innerHTML = '';
-    tasks.filter(t => !t.completed).slice(0, 3).forEach(task => {
-        dashTaskContainer.innerHTML += `
-            <div class="p-4 flex items-start gap-3 hover:bg-slate-50 transition-colors">
-                <div class="mt-1 w-2 h-2 rounded-full ${getDotColor(task.color)}"></div>
-                <div class="flex-1"><h3 class="font-semibold text-slate-800 text-sm">${task.title}</h3></div>
-            </div>`;
-    });
+// Task Preview
+const dashTaskContainer = document.getElementById('dash-taskList');
+dashTaskContainer.innerHTML = '';
+tasks.filter(t => !t.completed).slice(0, 3).forEach(task => {
+    dashTaskContainer.innerHTML += `
+        <div class="p-4 flex items-start gap-3 hover:bg-slate-50 transition-colors">
+            <div class="mt-1 w-2 h-2 rounded-full ${getDotColor(task.color)}"></div>
+            <div class="flex-1"><h3 class="font-semibold text-slate-800 text-sm">${task.title}</h3></div>
+        </div>`;
+});
 
-    renderCalendar();
+renderCalendar();
 }
 
 function renderCalendar() {
-    const grid = document.getElementById('calendarGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+const grid = document.getElementById('calendarGrid');
+if (!grid) return;
+grid.innerHTML = '';
+const now = new Date();
+const year = now.getFullYear();
+const month = now.getMonth();
+const firstDay = new Date(year, month, 1).getDay();
+const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    for (let i = 0; i < firstDay; i++) {
-        grid.innerHTML += `<div class="bg-slate-50/30 min-h-[80px] border-b border-r border-slate-100"></div>`;
-    }
+for (let i = 0; i < firstDay; i++) {
+    grid.innerHTML += `<div class="bg-slate-50/30 min-h-[80px] border-b border-r border-slate-100"></div>`;
+}
 
-    for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === now.getDate();
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const dayEvents = schedule.filter(item => item.date === dateStr);
+for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = d === now.getDate();
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dayEvents = schedule.filter(item => item.date === dateStr);
 
-        grid.innerHTML += `
-            <div onclick="handleDayClick('${dateStr}')"
-                 class="group relative min-h-[80px] p-2 border-b border-r border-slate-100 cursor-pointer transition-all hover:bg-brand-50/20 flex flex-col justify-between bg-white">
-                <span class="text-xs font-bold transition-colors ${isToday ? 'bg-brand-600 text-white w-6 h-6 flex items-center justify-center rounded-lg shadow-md' : 'text-slate-400 group-hover:text-slate-900'}">${d}</span>
-                <div class="flex gap-1 mt-auto overflow-hidden">
-                    ${dayEvents.length > 0 ? dayEvents.map((_, i) => `<div class="h-1.5 flex-1 rounded-full bg-brand-500 animate-in slide-in-from-bottom" style="animation-delay: ${i * 100}ms"></div>`).join('') : `<div class="h-1.5 w-full rounded-full bg-slate-100"></div>`}
-                </div>
-            </div>`;
-    }
+    grid.innerHTML += `
+        <div onclick="handleDayClick('${dateStr}')"
+             class="group relative min-h-[80px] p-2 border-b border-r border-slate-100 cursor-pointer transition-all hover:bg-brand-50/20 flex flex-col justify-between bg-white">
+            <span class="text-xs font-bold transition-colors ${isToday ? 'bg-brand-600 text-white w-6 h-6 flex items-center justify-center rounded-lg shadow-md' : 'text-slate-400 group-hover:text-slate-900'}">${d}</span>
+            <div class="flex gap-1 mt-auto overflow-hidden">
+                ${dayEvents.length > 0 ? dayEvents.map((_, i) => `<div class="h-1.5 flex-1 rounded-full bg-brand-500 animate-in slide-in-from-bottom" style="animation-delay: ${i * 100}ms"></div>`).join('') : `<div class="h-1.5 w-full rounded-full bg-slate-100"></div>`}
+            </div>
+        </div>`;
+}
 }
 
 function handleDayClick(dateString) {
-    currentScheduleFilter = dateString;
-    switchTab('schedule');
+currentScheduleFilter = dateString;
+switchTab('schedule');
 }
 
 function renderDayPicker() {
-    const picker = document.getElementById('scheduleDayPicker');
-    if (!picker) return;
-    picker.innerHTML = '';
-    const uniqueDates = [...new Set(schedule.map(item => item.date))].sort();
+const picker = document.getElementById('scheduleDayPicker');
+if (!picker) return;
+picker.innerHTML = '';
+const uniqueDates = [...new Set(schedule.map(item => item.date))].sort();
 
-    uniqueDates.forEach(dateStr => {
-        const isSelected = dateStr === currentScheduleFilter;
-        const dateObj = new Date(dateStr + 'T00:00:00');
-        picker.innerHTML += `
-            <button onclick="filterSchedule('${dateStr}')"
-                class="flex flex-col items-center min-w-[64px] p-3 rounded-2xl border transition-all ${isSelected ? 'bg-brand-600 border-brand-600 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-600'}">
-                <span class="text-[10px] font-bold uppercase opacity-80">${dateObj.toLocaleDateString('en-US', { weekday: 'short' })}</span>
-                <span class="text-lg font-bold">${dateObj.toLocaleDateString('en-US', { day: 'numeric' })}</span>
-            </button>`;
-    });
+uniqueDates.forEach(dateStr => {
+    const isSelected = dateStr === currentScheduleFilter;
+    const dateObj = new Date(dateStr + 'T00:00:00');
+    picker.innerHTML += `
+        <button onclick="filterSchedule('${dateStr}')"
+            class="flex flex-col items-center min-w-[64px] p-3 rounded-2xl border transition-all ${isSelected ? 'bg-brand-600 border-brand-600 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-600'}">
+            <span class="text-[10px] font-bold uppercase opacity-80">${dateObj.toLocaleDateString('en-US', { weekday: 'short' })}</span>
+            <span class="text-lg font-bold">${dateObj.toLocaleDateString('en-US', { day: 'numeric' })}</span>
+        </button>`;
+});
 }
 
 function filterSchedule(date) {
-    currentScheduleFilter = date;
-    renderDayPicker();
-    renderScheduleList(date);
+currentScheduleFilter = date;
+renderDayPicker();
+renderScheduleList(date);
 }
 
 function renderScheduleList(filterDate) {
-    const container = document.getElementById('full-scheduleList');
-    if (!container) return;
-    container.innerHTML = '<div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>';
+const container = document.getElementById('full-scheduleList');
+if (!container) return;
+container.innerHTML = '<div class="absolute left-2.5 top-2 bottom-2 w-0.5 bg-slate-100"></div>';
 
-    const dayEvents = schedule.filter(item => item.date === filterDate).sort((a, b) => a.time.localeCompare(b.time));
-    if (dayEvents.length === 0) {
-        container.innerHTML += `<div class="text-center py-10 text-slate-400">No events on this day.</div>`;
-        return;
-    }
+const dayEvents = schedule.filter(item => item.date === filterDate).sort((a, b) => a.time.localeCompare(b.time));
+if (dayEvents.length === 0) {
+    container.innerHTML += `<div class="text-center py-10 text-slate-400">No events on this day.</div>`;
+    return;
+}
 
-    dayEvents.forEach(item => {
-        container.innerHTML += `
-            <div class="relative flex gap-6 group pl-6 mb-6">
-                <div class="absolute left-[-2px] top-1.5 w-4 h-4 rounded-full bg-brand-600 border-2 border-white z-10"></div>
-                <div class="flex-1 flex gap-4 items-start">
-                    <div class="w-20 pt-1"><p class="text-sm font-bold text-slate-900">${item.displayTime}</p></div>
-                    <div class="flex-1 bg-white border border-slate-200 p-4 rounded-xl shadow-sm relative group">
-                        <h3 class="font-bold text-slate-900 text-sm">${item.title}</h3>
-                        <p class="text-xs text-slate-500 mt-1">${item.location}</p>
-                        <button onclick="deleteSchedule(${item.id})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="x-circle" class="w-5 h-5"></i></button>
-                    </div>
+dayEvents.forEach(item => {
+    container.innerHTML += `
+        <div class="relative flex gap-6 group pl-6 mb-6">
+            <div class="absolute left-[-2px] top-1.5 w-4 h-4 rounded-full bg-brand-600 border-2 border-white z-10"></div>
+            <div class="flex-1 flex gap-4 items-start">
+                <div class="w-20 pt-1"><p class="text-sm font-bold text-slate-900">${item.displayTime}</p></div>
+                <div class="flex-1 bg-white border border-slate-200 p-4 rounded-xl shadow-sm relative group">
+                    <h3 class="font-bold text-slate-900 text-sm">${item.title}</h3>
+                    <p class="text-xs text-slate-500 mt-1">${item.location}</p>
+                    <button onclick="deleteSchedule(${item.id})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="x-circle" class="w-5 h-5"></i></button>
                 </div>
-            </div>`;
-    });
-    lucide.createIcons();
+            </div>
+        </div>`;
+});
+lucide.createIcons();
 }
 
 function renderTodoList() {
-    const container = document.getElementById('full-taskList');
-    if (!container) return;
-    container.innerHTML = '';
-    [...tasks].sort((a, b) => a.completed - b.completed).forEach(task => {
-        container.innerHTML += `
-            <div class="p-5 flex items-start gap-4 hover:bg-slate-50 transition-colors group ${task.completed ? 'opacity-50' : ''}">
-                <div class="mt-1 cursor-pointer" onclick="toggleTask(${task.id})">
-                    <div class="w-6 h-6 rounded border-2 ${task.completed ? 'bg-brand-600 border-brand-600' : 'border-slate-300'} flex items-center justify-center">
-                        ${task.completed ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
-                    </div>
+const container = document.getElementById('full-taskList');
+if (!container) return;
+container.innerHTML = '';
+[...tasks].sort((a, b) => a.completed - b.completed).forEach(task => {
+    container.innerHTML += `
+        <div class="p-5 flex items-start gap-4 hover:bg-slate-50 transition-colors group ${task.completed ? 'opacity-50' : ''}">
+            <div class="mt-1 cursor-pointer" onclick="toggleTask(${task.id})">
+                <div class="w-6 h-6 rounded border-2 ${task.completed ? 'bg-brand-600 border-brand-600' : 'border-slate-300'} flex items-center justify-center">
+                    ${task.completed ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
                 </div>
-                <div class="flex-1"><h3 class="font-semibold text-slate-900 ${task.completed ? 'line-through' : ''}">${task.title}</h3></div>
-                <button onclick="deleteTask(${task.id})" class="p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
-            </div>`;
-    });
-    lucide.createIcons();
+            </div>
+            <div class="flex-1"><h3 class="font-semibold text-slate-900 ${task.completed ? 'line-through' : ''}">${task.title}</h3></div>
+            <button onclick="deleteTask(${task.id})" class="p-2 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+        </div>`;
+});
+lucide.createIcons();
 }
 
 // --- 4. DATA ACTIONS ---
 function handleAddTask(e) {
-    e.preventDefault();
-    tasks.unshift({ id: Date.now(), title: document.getElementById('taskTitle').value, detail: document.getElementById('taskDetail').value, due: document.getElementById('taskTag').value || 'Soon', color: document.getElementById('taskColor').value, completed: false });
-    saveAndRender(); closeModals(); e.target.reset();
+e.preventDefault();
+tasks.unshift({ id: Date.now(), title: document.getElementById('taskTitle').value, detail: document.getElementById('taskDetail').value, due: document.getElementById('taskTag').value || 'Soon', color: document.getElementById('taskColor').value, completed: false });
+saveAndRender(); closeModals(); e.target.reset();
 }
 
 function handleAddSchedule(e) {
-    e.preventDefault();
-    const rawTime = document.getElementById('schTime').value;
-    const rawDate = document.getElementById('schDate').value;
-    const [h, m] = rawTime.split(':');
-    const d = new Date(); d.setHours(h); d.setMinutes(m);
+e.preventDefault();
+const rawTime = document.getElementById('schTime').value;
+const rawDate = document.getElementById('schDate').value;
+const [h, m] = rawTime.split(':');
+const d = new Date(); d.setHours(h); d.setMinutes(m);
 
-    schedule.push({ id: Date.now(), date: rawDate, time: rawTime, displayTime: d.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }), title: document.getElementById('schTitle').value, location: document.getElementById('schLoc').value, duration: document.getElementById('schDuration').value || '1h' });
-    currentScheduleFilter = rawDate; // Switch view to the date just added
-    saveAndRender(); closeModals(); e.target.reset();
+schedule.push({ id: Date.now(), date: rawDate, time: rawTime, displayTime: d.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' }), title: document.getElementById('schTitle').value, location: document.getElementById('schLoc').value, duration: document.getElementById('schDuration').value || '1h' });
+currentScheduleFilter = rawDate; // Switch view to the date just added
+saveAndRender(); closeModals(); e.target.reset();
 }
 
 function saveAndRender() {
-    localStorage.setItem('scholaros_tasks', JSON.stringify(tasks));
-    localStorage.setItem('scholaros_schedule', JSON.stringify(schedule));
-    renderAll();
+localStorage.setItem('scholaros_tasks', JSON.stringify(tasks));
+localStorage.setItem('scholaros_schedule', JSON.stringify(schedule));
+renderAll();
 }
 
 function toggleTask(id) { tasks = tasks.map(t => t.id === id ? {...t, completed: !t.completed} : t); saveAndRender(); }
@@ -531,10 +572,10 @@ function closeModals() { document.getElementById('taskModal').classList.add('hid
 
 // --- 5. INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    switchTab('dashboard');
-    {% if response %} switchTab('college'); {% endif %}
-    renderAll();
+switchTab('dashboard');
+{% if response %} switchTab('college'); {% endif %}
+renderAll();
 });
-    </script>
+</script>
 </body>
 </html>

@@ -1,8 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest
 from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from ollama import chat
+from .models import CustomStudent
+from .forms import CustomStudentForm
+
 
 # Create your views here.
 
@@ -10,7 +15,7 @@ class LandingView(TemplateView):
     template_name = 'myapp/landing.html'
 
 
-class DashboardView(View):
+class DashboardView(View, LoginRequiredMixin):
     def get(self, request):
         context = {
 
@@ -109,3 +114,8 @@ def demo(request):
 
 def profile_view(request):
     return render(request, 'myapp/profile.html')
+
+class RegistrationView(CreateView):
+    form_class = CustomStudentForm
+    template_name = 'myapp/reg_form.html'
+    success_url = reverse_lazy('myapp:login')
